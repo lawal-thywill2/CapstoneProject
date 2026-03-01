@@ -1,0 +1,20 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}Add Workout{% endblock %}
+
+{% block content %}
+<h2>Add Workout</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Task:</label>
+  <select name="task_id" class="form-select mb-2">
+    {% for t in tasks %}
+    <option value="{{ t.id }}">{{ t.title }}</option>
+    {% endfor %}
+  </select>
+  <input type="text" name="workout_type" class="form-control mb-2" placeholder="Workout Type" required>
+  <input type="number" name="duration" class="form-control mb-2" placeholder="Duration (minutes)" required>
+  <input type="number" name="calories_burned" class="form-control mb-2" placeholder="Calories Burned" required>
+  <button type="submit" class="btn btn-success mt-2">Add Workout</button>
+</form>
+{% endblock %}

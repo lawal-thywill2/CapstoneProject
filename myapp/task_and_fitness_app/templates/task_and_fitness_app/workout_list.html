@@ -1,0 +1,35 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}Workout List{% endblock %}
+
+{% block content %}
+<h2>My Workouts</h2>
+<a href="{% url 'create_workout' %}" class="btn btn-success mb-3">Add Workout</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Type</th>
+      <th>Duration</th>
+      <th>Calories</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for w in workouts %}
+    <tr>
+      <td>{{ w.task.title }}</td>
+      <td>{{ w.workout_type }}</td>
+      <td>{{ w.duration }}</td>
+      <td>{{ w.calories_burned }}</td>
+      <td>
+        <a href="{% url 'edit_workout' w.id %}" class="btn btn-sm btn-primary">Edit</a>
+        <a href="{% url 'delete_workout' w.id %}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No workouts yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

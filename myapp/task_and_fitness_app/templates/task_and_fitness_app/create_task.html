@@ -1,0 +1,15 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<h2>Create Task</h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="title" class="form-control mb-2" placeholder="Task Title" required>
+  <textarea name="description" class="form-control mb-2" placeholder="Description"></textarea>
+  <input type="datetime-local" name="due_date" class="form-control mb-2" required>
+  <button type="submit" class="btn btn-success mt-2">Add Task</button>
+</form>
+<a href="{% url 'task_list' %}" class="btn btn-secondary mt-3">Back to Task List</a>
+{% endblock %}

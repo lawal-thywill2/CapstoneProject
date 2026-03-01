@@ -1,0 +1,15 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<h2>Edit Profile</h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="number" name="age" class="form-control mb-2" placeholder="Age" value="{{ user_profile.age }}"><br>
+  <input type="number" step="0.1" name="weight" class="form-control mb-2" placeholder="Weight (kg)" value="{{ user_profile.weight }}"><br>
+  <input type="number" step="0.1" name="height" class="form-control mb-2" placeholder="Height (cm)" value="{{ user_profile.height }}"><br>
+  <input type="number" step="0.1" name="BMI" class="form-control mb-2" placeholder="BMI" value="{{ user_profile.BMI }}"><br>
+  <button type="submit" class="btn btn-primary mt-2">Save</button>
+</form>
+{% endblock %}

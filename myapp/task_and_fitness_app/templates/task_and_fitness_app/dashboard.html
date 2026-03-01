@@ -1,0 +1,87 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Welcome, {{ request.user.username }}!</h1>
+</div>
+
+<!-- Tasks Card -->
+<div class="card mb-4">
+  <div class="card-header bg-info text-white"><h2 class="mb-0">Tasks</h2></div>
+  <div class="card-body">
+    <a href="{% url 'create_task' %}" class="btn btn-success mb-3">Add New Task</a>
+    <table class="table table-striped">
+      <thead><tr><th>Title</th><th>Due Date</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr>
+          <td>{{ task.title }}</td>
+          <td>{{ task.due_date }}</td>
+          <td>{% if task.completed %}✅ Done{% else %}⏳ Pending{% endif %}</td>
+          <td>
+            {% if not task.completed %}<a href="{% url 'complete_task' task.id %}" class="btn btn-sm btn-success">Complete</a>{% endif %}
+            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}<tr><td colspan="4">No tasks yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Workouts Card -->
+<div class="card mb-4">
+  <div class="card-header bg-warning text-dark"><h2 class="mb-0">Workouts</h2></div>
+  <div class="card-body">
+    <a href="{% url 'create_workout' %}" class="btn btn-success mb-3">Add Workout</a>
+    <table class="table table-striped">
+      <thead><tr><th>Task</th><th>Type</th><th>Duration</th><th>Calories</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for w in workouts %}
+        <tr>
+          <td>{{ w.task.title }}</td>
+          <td>{{ w.workout_type }}</td>
+          <td>{{ w.duration }}</td>
+          <td>{{ w.calories_burned }}</td>
+          <td>
+            <a href="{% url 'edit_workout' w.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_workout' w.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}<tr><td colspan="5">No workouts yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Body Stats Card -->
+<div class="card mb-4">
+  <div class="card-header bg-success text-white"><h2 class="mb-0">Body Stats</h2></div>
+  <div class="card-body">
+    <a href="{% url 'add_body_stat' %}" class="btn btn-success mb-3">Add New Record</a>
+    {% if latest_stat %}
+    <p><strong>Latest:</strong> Weight {{ latest_stat.weight }} kg | Height {{ latest_stat.height }} cm | BMI {{ latest_stat.bmi }} | Date: {{ latest_stat.recorded_date }}</p>
+    {% endif %}
+    <table class="table table-striped">
+      <thead><tr><th>Date</th><th>Weight</th><th>Height</th><th>BMI</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for stat in body_stats %}
+        <tr>
+          <td>{{ stat.recorded_date }}</td>
+          <td>{{ stat.weight }}</td>
+          <td>{{ stat.height }}</td>
+          <td>{{ stat.bmi }}</td>
+          <td>
+            <a href="{% url 'edit_body_stat' stat.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_body_stat' stat.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}<tr><td colspan="5">No body stats yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

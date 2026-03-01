@@ -1,0 +1,14 @@
+{% extends 'task_and_fitness_app/base.html' %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<h2>Edit Task</h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="title" class="form-control mb-2" value="{{ task.title }}" required>
+  <textarea name="description" class="form-control mb-2">{{ task.description }}</textarea>
+  <input type="datetime-local" name="due_date" class="form-control mb-2" value="{{ task.due_date|date:'Y-m-d\\TH:i' }}" required>
+  <button type="submit" class="btn btn-primary mt-2">Update Task</button>
+</form>
+{% endblock %}
