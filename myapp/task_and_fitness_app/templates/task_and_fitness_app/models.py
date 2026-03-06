@@ -14,7 +14,7 @@ class UserAccount(AbstractUser):
         return self.user_name
     
 class UserProfile(models.Model):
-    user=models.OneToOneField(UserAccount, on_delete=models.CASCADE)
+    user=models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     age=models.PositiveIntegerField()
     weight=models.FloatField()
     height=models.FloatField()
@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     
 class Task(models.Model):
     task_id=models.BigAutoField(primary_key=True)
-    user=models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    user=models.OneToOneField(UserAccount, on_delete=models.CASCADE)
     title=models.CharField(max_length=255)
     description=models.TextField()
     priority=models.CharField(max_length=50) # user sets priority of the task(e.g;high,medium, low,etc)
