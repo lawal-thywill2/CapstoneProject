@@ -6,12 +6,12 @@ from django.contrib.auth.models import AbstractUser
 class UserAccount(AbstractUser):
     user_id=models.BigAutoField(primary_key=True)
     email=models.EmailField(unique=True)
-    user_name=models.CharField(max_length=150, unique=True)
+    username=models.CharField(max_length=150, unique=True)
     phone=models.CharField(max_length=20, unique=True)
     password=models.CharField(max_length=128)
 
     def __str__(self):
-        return self.user_name
+        return self.username
     
 class UserProfile(models.Model):
     user=models.ForeignKey(UserAccount, on_delete=models.CASCADE)
@@ -21,11 +21,11 @@ class UserProfile(models.Model):
     BMI=models.FloatField()
 
     def __str__(self):
-        return f"{self.user.user_name}'s Profile"
+        return f"{self.user.username}'s Profile"
     
 class Task(models.Model):
     task_id=models.BigAutoField(primary_key=True)
-    user=models.OneToOneField(UserAccount, on_delete=models.CASCADE)
+    user=models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     title=models.CharField(max_length=255)
     description=models.TextField()
     priority=models.CharField(max_length=50) # user sets priority of the task(e.g;high,medium, low,etc)
@@ -47,7 +47,7 @@ class Workout(models.Model):
     date=models.DateTimeField(auto_now_add=True) # automatically added when workout is created
 
     def __str__(self):
-        return f"{self.workout_type} - {self.user_id.user_name}"
+        return f"{self.workout_type} - {self.user.username}"
     
 class Bodystats(models.Model):
     user=models.ForeignKey(UserAccount, on_delete=models.CASCADE)
@@ -57,4 +57,4 @@ class Bodystats(models.Model):
     BMI=models.FloatField() # BMI based on weight and height at the time of recording body stats
 
     def __str__(self):
-        return f"{self.user_id.user_name}'s Body Stats on {self.recorded_date}"
+        return f"{self.user.username}'s Body Stats on {self.recorded_date}"

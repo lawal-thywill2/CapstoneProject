@@ -43,7 +43,7 @@ def login_view(request):
 # User profile view to display and update user profile information
 @login_required
 def user_profile_view(request):
-    user_profile = UserProfile.objects.get_or_create(user=request.user)
+    user_profile,created= UserProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         age = request.POST.get('age')
         weight = request.POST.get('weight')
@@ -79,7 +79,7 @@ def create_task_view(request):
         due_date = request.POST.get('due_date')
         completed = request.POST.get('completed', False)
         Task.objects.create(
-            user_id=request.user.pk,
+            user=request.user,
             title=title,
             description=description,
             priority=priority,
@@ -129,8 +129,8 @@ def workout_list(request):
 @login_required
 def add_body_stats(request):
     if request.method == 'POST':
-        weight = request.POST.get('weight')
-        height = request.POST.get('height')
+        weight = float(request.POST.get('weight'))
+        height = float(request.POST.get('height'))
         #BMIformula: weight (kg) / (height (m)^2)
         height_in_m = height / 100
         BMI = weight / (height_in_m ** 2)

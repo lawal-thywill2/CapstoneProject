@@ -27,8 +27,8 @@ urlpatterns = [
     path('workouts/delete/<int:workout_id>/', views.delete_workout, name='delete_workout'),
 
     # Body Stats
-    path('body-stats/', views.body_stats_list, name='body_stat_list'),
-    path('body-stats/add/', views.add_body_stats, name='add_body_stat'),
+    path('body-stats/', views.body_stats_list, name='body_stats_list'),
+    path('body-stats/add/', views.add_body_stats, name='add_body_stats'),
     path('body-stats/edit/<int:stat_id>/', views.edit_body_stat, name='edit_body_stat'),
     path('body-stats/delete/<int:stat_id>/', views.delete_body_stat, name='delete_body_stat'),
 ]
