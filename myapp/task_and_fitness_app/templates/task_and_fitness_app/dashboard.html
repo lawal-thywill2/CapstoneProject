@@ -61,7 +61,7 @@
 <div class="card mb-4">
   <div class="card-header bg-success text-white"><h2 class="mb-0">Body Stats</h2></div>
   <div class="card-body">
-    <a href="{% url 'add_body_stat' %}" class="btn btn-success mb-3">Add New Record</a>
+    <a href="{% url 'add_body_stats' %}" class="btn btn-success mb-3">Add New Record</a>
     {% if latest_stat %}
     <p><strong>Latest:</strong> Weight {{ latest_stat.weight }} kg | Height {{ latest_stat.height }} cm | BMI {{ latest_stat.bmi }} | Date: {{ latest_stat.recorded_date }}</p>
     {% endif %}
